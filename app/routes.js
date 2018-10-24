@@ -1,5 +1,4 @@
-var AuthenticationController = require('./controllers/authentication'), 
-    TodoController = require('./controllers/todos'), 
+var AuthenticationController = require('./controllers/authentication'),
     express = require('express'),
     passportService = require('../config/passport'),
     passport = require('passport');
@@ -17,20 +16,18 @@ module.exports = function(app){
  
     // Auth Routes
     apiRoutes.use('/auth', authRoutes);
- 
     authRoutes.post('/register', AuthenticationController.register);
     authRoutes.post('/login', requireLogin, AuthenticationController.login);
- 
     authRoutes.get('/protected', requireAuth, function(req, res){
         res.send({ content: 'Success'});
     });
  
     // Todo Routes
-    apiRoutes.use('/todos', todoRoutes);
+    // apiRoutes.use('/todos', todoRoutes);
  
-    todoRoutes.get('/', requireAuth, AuthenticationController.roleAuthorization(['reader','creator','editor']), TodoController.getTodos);
-    todoRoutes.post('/', requireAuth, AuthenticationController.roleAuthorization(['creator','editor']), TodoController.createTodo);
-    todoRoutes.delete('/:todo_id', requireAuth, AuthenticationController.roleAuthorization(['editor']), TodoController.deleteTodo);
+    // todoRoutes.get('/', requireAuth, AuthenticationController.roleAuthorization(['reader','creator','editor']), TodoController.getTodos);
+    // todoRoutes.post('/', requireAuth, AuthenticationController.roleAuthorization(['creator','editor']), TodoController.createTodo);
+    // todoRoutes.delete('/:todo_id', requireAuth, AuthenticationController.roleAuthorization(['editor']), TodoController.deleteTodo);
 
     // // Get Users
     // app.get('/api/users', function(req, res) {
